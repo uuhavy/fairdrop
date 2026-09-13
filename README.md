@@ -6,14 +6,14 @@ FairDrop is an AI Governance hackathon project built on GenLayer Bradbury. Organ
 
 ## Observed demo
 
-The project owner completed deployment, submission, evaluation and approval through the local English website using OKX Wallet. The public deployment now reads the same testnet campaign; hosted wallet signing is awaiting its separate manual verification. Screenshots show a 100/100 review and an approved 1,000-point allocation.
+The project owner completed deployment, submission, evaluation and approval through the local English website using OKX Wallet. The Vercel deployment reads the same testnet campaign. The owner also tested submission and evaluation on the earlier public hosting domain; signing on the Vercel domain has not yet been independently verified. Screenshots show a 100/100 review and an approved 1,000-point allocation.
 
 - Network: GenLayer Bradbury testnet (chain 4221)
 - Website-created campaign: `0xd46dF8accb9346D3a5AB0ABCe06E1BCc91ACe55f`
 - [Contract explorer](https://explorer-bradbury.genlayer.com/address/0xd46dF8accb9346D3a5AB0ABCe06E1BCc91ACe55f)
-- Earlier Studio-created default campaign: `0xf6Bb13d8f1458bbb651744D9670F3846F5d386A2` (98/100 review)
-- [Public website](https://fairdrop-community.nguyenhavy10012002-v.chatgpt.site)
-- [Completed 100/100 campaign](https://fairdrop-community.nguyenhavy10012002-v.chatgpt.site/?contract=0xd46dF8accb9346D3a5AB0ABCe06E1BCc91ACe55f)
+- Earlier Studio-created campaign: `0xf6Bb13d8f1458bbb651744D9670F3846F5d386A2` (98/100 review)
+- [Public website](https://fairdrop-three.vercel.app)
+- [Completed 100/100 campaign](https://fairdrop-three.vercel.app/?contract=0xd46dF8accb9346D3a5AB0ABCe06E1BCc91ACe55f)
 
 These are observed examples, not a measured model-accuracy benchmark. Allocations are **points only**; no tokens are transferred. Reads use latest non-final state and are labeled accordingly. Campaign approval and network finalization are distinct.
 
@@ -39,6 +39,10 @@ npm run build
 npx tsc --noEmit
 ```
 
+## Vercel deployment
+
+See [VERCEL.md](VERCEL.md) for deployment settings. The homepage opens the completed 100/100 campaign; a `?contract=` URL selects another campaign.
+
 ## Reviewer walkthrough
 
 1. Open the completed campaign URL above. Confirm Approved, one submission and one review.
@@ -59,7 +63,7 @@ The app retains the pending transaction hash locally. Check its result before re
 - `contracts/fairdrop.py`: Python Intelligent Contract; `public/fairdrop.py` is the identical source used for browser deployment.
 - `app/demo`: explicitly labeled browser-local prototype with fixture scores.
 
-The web app uses React, Vinext/Vite, Radix UI, Zod and the official genlayer-js SDK. It uses no application database for campaign state.
+The web app uses React, Next.js on Vercel, Radix UI, Zod and the official genlayer-js SDK. The Sites build uses Vinext/Vite. It uses no application database for campaign state.
 
 ## Contract policy
 
@@ -82,4 +86,4 @@ python scripts/check-contract.py test
 
 The wrapper stores SDK artifacts in `work/genvm-cache`; first use may download a substantial runtime. See `contracts/VALIDATION.md`. The 20 cases in `tests/review-benchmark.json` remain an unrun live-model benchmark.
 
-Limitations: no token distribution, identity verification, Sybil protection, plagiarism detection or formal appeals. Validator agreement does not guarantee truth. Explanation equivalence is not separately verified semantically. New wallets and edge cases need broader network testing. The public website and submission assets are prepared. Hosted wallet signing and final form review remain pending.
+Limitations: no token distribution, identity verification, Sybil protection, plagiarism detection or formal appeals. Validator agreement does not guarantee truth. Explanation equivalence is not separately verified semantically. New wallets and edge cases need broader network testing. The public website and submission assets are prepared. Wallet signing on Vercel and final form review remain pending.
