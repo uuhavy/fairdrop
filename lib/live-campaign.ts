@@ -1,6 +1,6 @@
 import { z } from 'zod';
-export const CONTRACT = '0xd46dF8accb9346D3a5AB0ABCe06E1BCc91ACe55f' as const;
-export const EXPLORER = `https://explorer-bradbury.genlayer.com/address/${CONTRACT}`;
+export const CONTRACT = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || '';
+export const EXPLORER = `https://explorer-studio-dev.genlayer.com/address/${CONTRACT}`;
 const address = z.string().regex(/^0x[0-9a-fA-F]{40}$/);
 const review = z.object({scores: z.tuple([z.number().int().min(0).max(50),z.number().int().min(0).max(30),z.number().int().min(0).max(20)]), reasons:z.array(z.string()).length(3), evidence:z.array(z.string()), needs_review:z.boolean()});
 export const campaignSchema = z.object({

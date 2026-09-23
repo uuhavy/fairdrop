@@ -1,89 +1,43 @@
 # FairDrop
 
-**Transparent AI reviews. Community contribution rewards.**
+FairDrop is an AI governance application for reviewing community contributions against a public brief and allocating campaign points after owner approval.
 
-FairDrop is an AI Governance hackathon project built on GenLayer Bradbury. Organizers define an educational task, reference material and point pool. Contributors submit articles, validators evaluate them, and the campaign owner approves the final point allocation.
+Website: https://fairdrop-three.vercel.app/
 
-## Observed demo
+## Network
 
-The project owner completed deployment, submission, evaluation and approval through the local English website using OKX Wallet. The Vercel deployment reads the same testnet campaign. The owner also tested submission and evaluation on the earlier public hosting domain; signing on the Vercel domain has not yet been independently verified. Screenshots show a 100/100 review and an approved 1,000-point allocation.
+All live campaign reads and wallet operations use **GenLayer Studio Next**, chain ID **61997**:
+- RPC: https://studio-next.genlayer.com/api
+- Explorer: https://explorer-studio-dev.genlayer.com/
+- Configuration: `lib/network.ts`
+- Server reader: `app/api/campaign/route.ts`
+- OKX connection, network guards, deployment and writes: `components/wallet-actions.tsx`
 
-- Network: GenLayer Bradbury testnet (chain 4221)
-- Website-created campaign: `0xd46dF8accb9346D3a5AB0ABCe06E1BCc91ACe55f`
-- [Contract explorer](https://explorer-bradbury.genlayer.com/address/0xd46dF8accb9346D3a5AB0ABCe06E1BCc91ACe55f)
-- Earlier Studio-created campaign: `0xf6Bb13d8f1458bbb651744D9670F3846F5d386A2` (98/100 review)
-- [Public website](https://fairdrop-three.vercel.app)
-- [Completed 100/100 campaign](https://fairdrop-three.vercel.app/?contract=0xd46dF8accb9346D3a5AB0ABCe06E1BCc91ACe55f)
+The SDK studioDevnet consensus configuration is preserved while selecting the Studio Next endpoint. Bradbury contract addresses do not migrate automatically. No Bradbury address is supplied as the default campaign.
 
-These are observed examples, not a measured model-accuracy benchmark. Allocations are **points only**; no tokens are transferred. Reads use latest non-final state and are labeled accordingly. Campaign approval and network finalization are distinct.
+## Run and deploy
 
-## Run locally
+Use Node.js 22.13 or later. Run `npm ci`, then `npx next dev -p 5173`. Production build: `npx next build --webpack`. Vercel settings are in `vercel.json`.
 
-Requires Node.js 22.13+ and npm.
+Deploy a new campaign through the application using OKX. The Transaction Kit panel estimates fees, shows a quote for approval, and tracks execution. Points are not GEN or token payouts; network transaction fees are separate.
 
-```sh
-npm run install:ci
-npm run dev
-```
+After verifying a real deployment, set `NEXT_PUBLIC_CONTRACT_ADDRESS` in Vercel to its Studio Next address and redeploy. Share `https://fairdrop-three.vercel.app/?contract=YOUR_STUDIO_NEXT_ADDRESS`. The placeholder is not a deployed address.
 
-Open http://localhost:5173/ or the completed website campaign at:
+## Verify the workflow
 
-```text
-http://localhost:5173/?contract=0xd46dF8accb9346D3a5AB0ABCe06E1BCc91ACe55f
-```
+1. Connect OKX and create a campaign with a brief, reference material and point pool.
+2. Review the fee quote and confirm deployment in OKX.
+3. Submit an original article and confirm its transaction.
+4. As owner, close submissions and evaluate the contribution.
+5. Inspect scores, reasons and evidence; approve an eligible allocation.
+6. Reload the shared campaign URL without a wallet and verify persisted results. Confirm finalization in the explorer.
 
-Reading the campaign does not require a wallet. To create a campaign or submit an article, open the site in a browser with OKX Wallet, connect to Bradbury, and review each transaction before signing. No seed phrase or private key is used by the app.
+## Why GenLayer
 
-```sh
-npm run build
-npx tsc --noEmit
-```
+The Python Intelligent Contract stores the immutable campaign rubric, submissions, reviews and approved allocation. AI evaluates accuracy, brief fulfillment and clarity. Validators independently evaluate the meaningful scoring outcome, including qualification threshold agreement and score tolerances. Owner approval is required before deterministic point allocation. Validator agreement does not establish absolute truth.
 
-## Vercel deployment
+## Limits and submission status
 
-See [VERCEL.md](VERCEL.md) for deployment settings. The homepage opens the completed 100/100 campaign; a `?contract=` URL selects another campaign.
+The migration build has passed, but deployment and end-to-end execution on Studio Next must be verified with a real wallet. Fee estimates currently use network defaults, not a measured FairDrop fee profile. The sandbox route is an illustrative local demo, not proof of a live contract.
 
-## Reviewer walkthrough
-
-1. Open the completed campaign URL above. Confirm Approved, one submission and one review.
-2. Read the submission, its 50/50 accuracy, 30/30 fulfillment and 20/20 clarity scores, review reasons and evidence.
-3. Open Allocation: the owner wallet has 1,000 points. Open History to inspect the stored audit trail.
-4. To try a fresh campaign, connect OKX and choose Create campaign. Review the populated constructor values and deploy.
-5. Check transaction result. A successful deployment selects its new address in the URL. Save that URL.
-6. Submit an article, check the transaction, close submissions, evaluate, and approve the point allocation. Each write requires a wallet signature.
-
-The app retains the pending transaction hash locally. Check its result before resending. ACCEPTED alone is not proof of execution success; the app also checks FINISHED_WITH_RETURN.
-
-## Architecture
-
-- `app/page.tsx`: live English campaign UI, reviews, allocation and audit history.
-- `components/wallet-actions.tsx`: OKX connection, deployment, submissions and owner actions.
-- `app/api/campaign/route.ts`: read-only GenLayer SDK endpoint with address and response validation.
-- `lib/live-campaign.ts`: campaign response schema and default deployment.
-- `contracts/fairdrop.py`: Python Intelligent Contract; `public/fairdrop.py` is the identical source used for browser deployment.
-- `app/demo`: explicitly labeled browser-local prototype with fixture scores.
-
-The web app uses React, Next.js on Vercel, Radix UI, Zod and the official genlayer-js SDK. The Sites build uses Vinext/Vite. It uses no application database for campaign state.
-
-## Contract policy
-
-Each deployment has immutable criteria and reference material. The rubric weights accuracy 50, fulfillment 30 and clarity 20; qualification requires 60/100. There is one submission per wallet and a maximum of 50 entries.
-
-Validators independently score the frozen content. The custom verifier requires agreement on whether review is unresolved and whether the score qualifies, with per-criterion tolerances [5,3,2]. Evidence must be exact quotes from the submission. An entry cannot be re-evaluated to shop for scores.
-
-The owner closes submissions, evaluates entries and approves allocation. Qualifying entries share the pool with largest-remainder integer rounding and ascending ID tie breaks. Unresolved reviews block approval. The author can withdraw an unresolved entry with a reason; the owner can cancel a campaign. These two methods currently require Studio because the website does not expose them. See `contracts/POLICY.md`.
-
-## Validation and limitations
-
-44 isolated official SDK Direct Mode tests passed during development. These test contract behavior with controlled model outputs; they are not full network or live-model tests. TypeScript, production build, live SDK reads and website API reads have also passed. The owner manually verified one full website/OKX campaign.
-
-Install `requirements-contract.txt` in a Python 3.12+ virtual environment, then run:
-
-```sh
-python scripts/check-contract.py lint
-python scripts/check-contract.py test
-```
-
-The wrapper stores SDK artifacts in `work/genvm-cache`; first use may download a substantial runtime. See `contracts/VALIDATION.md`. The 20 cases in `tests/review-benchmark.json` remain an unrun live-model benchmark.
-
-Limitations: no token distribution, identity verification, Sybil protection, plagiarism detection or formal appeals. Validator agreement does not guarantee truth. Explanation equivalence is not separately verified semantically. New wallets and edge cases need broader network testing. The public website and submission assets are prepared. Wallet signing on Vercel and final form review remain pending.
+A **real demo video is mandatory** for the hackathon. The submission is not ready until the Studio Next contract, full public workflow and video URL have been verified. See [STUDIO-NEXT.md](STUDIO-NEXT.md) for the migration checklist.
