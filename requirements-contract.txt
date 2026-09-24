@@ -1,4 +1,3 @@
-# Contract validation tooling (Python 3.12+)
-genlayer-test==0.29.2
-genvm-linter==0.11.0
-pytest==9.1.1
+genlayer-test==0.30.0rc2
+genvm-linter==0.11.1rc2
+cloudpickle==3.1.2

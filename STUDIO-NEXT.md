@@ -33,3 +33,8 @@ The Python contract has not been redeployed or verified against Studio Next in t
 Record the real public application: explain the task and published rubric, show OKX fee review and submission, show the AI review with evidence, then owner approval and persisted allocation. Explain why independent validators check the meaningful scoring outcome and why points are not token payouts. Upload a real video and place its URL in the Portal. The video is mandatory even if the form says optional.
 
 Do not mark the submission ready until the live test and video are complete. Replace old Bradbury deployment links in the Portal and README with verified Studio Next links.
+
+## Runtime migration fix (24 September 2026)
+The failed deployment 0x7533afd42df9923ab92314fc8404b3cd2ccc8b1a2ae8f24180757b48a811a704 returned `invalid_contract runner malformed`. The contract now uses the exact runner pin from Studio v0.123.0-rc.7 examples, GenVM v0.6.0-rc5, the new module imports/storage namespaces, and `gl.vm.run_nondet`. Both public/fairdrop.py and contracts/fairdrop.py must be updated together.
+
+The test launcher adapts gltest 0.30.0rc2's mock LLM envelope to the rc5 SDK's raw-text response protocol; it does not replace contract evaluation or validator logic. Test results use mocked LLMs and do not prove real network consensus.

@@ -1,8 +1,9 @@
-# { "Depends": "py-genlayer:1jb45aa8ynh2a9c9xn3b7qqh8sm5q93hwfp7jqmwsfhh8jpz09h6" }
-from genlayer import *
+# { "Depends": "py-genlayer:5jycge4q8k23462jtb0b9fyey1s9qz928sz2nbrd9mg4sxqg2qng" }
+import genlayer as gl
+from genlayer.types import *
 import json
 
-class FairDrop(gl.Contract):
+class FairDrop(gl.contract.Contract):
     """One immutable campaign per deployment. Points only; no token transfers."""
     owner: Address
     title: str
@@ -10,10 +11,10 @@ class FairDrop(gl.Contract):
     reference: str
     pool: u256
     phase: str
-    entries: TreeMap[str, str]
-    ids: DynArray[str]
+    entries: gl.storage.TreeMap[str, str]
+    ids: gl.storage.DynArray[str]
     allocations: str
-    audit: DynArray[str]
+    audit: gl.storage.DynArray[str]
 
     def __init__(self, title: str, brief: str, reference: str, pool: int):
         if type(pool) is not int or not 1 <= pool <= 1000000 or not title.strip() or not brief.strip() or not reference.strip():
@@ -109,7 +110,7 @@ DATA:
             try:
                 validate(proposed)
                 independent = score()
-            except (gl.vm.UserError, ValueError, TypeError):
+            except (gl.vm.UserError, gl.nondet.NondetException, ValueError, TypeError):
                 # Malformed leader/validator output must not count as agreement.
                 return False
             # Independent re-evaluation, not schema-only acceptance.
@@ -119,7 +120,7 @@ DATA:
                 return False
             return all(abs(a-b) <= t for a,b,t in zip(proposed['scores'], independent['scores'], [5,3,2]))
 
-        result = gl.vm.run_nondet_unsafe(score, verifier)
+        result = gl.vm.run_nondet(score, verifier)
         validate(result)
         entry['review'] = result
         self.entries[submission_id] = json.dumps(entry)

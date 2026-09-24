@@ -1,0 +1,184 @@
+{
+  "total": 44,
+  "passed": 44,
+  "failed": 0,
+  "mode": "Official genlayer-test Direct Mode; isolated processes; mocked LLMs",
+  "results": [
+    {
+      "test": "tests/test_fairdrop.py::test_happy_path",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_owner_permissions[close_submissions-args0]",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_owner_permissions[evaluate-args1]",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_owner_permissions[approve-args2]",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_owner_permissions[cancel-args3]",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_duplicate_and_closed_submission",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_phase_guards[approve-args0]",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_phase_guards[evaluate-args1]",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_phase_guards[proposal-args2]",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_phase_guards[withdraw_unresolved-args3]",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_empty_close",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_missing_and_unevaluated",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_no_score_shopping",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_unresolved_author_withdrawal",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_cannot_withdraw_qualified",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_cancel_terminal",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_independent_validator[scores0-False-True]",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_independent_validator[scores1-False-False]",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_independent_validator[scores2-False-False]",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_independent_validator[scores3-False-False]",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_independent_validator[scores4-True-False]",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_threshold_disagreement",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_invalid_llm_output[bad0]",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_invalid_llm_output[bad1]",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_invalid_llm_output[bad2]",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_invalid_llm_output[bad3]",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_invalid_llm_output[bad4]",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_invalid_llm_output[bad5]",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_invalid_llm_output[bad6]",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_invalid_llm_output[bad7]",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_invalid_pool[0]",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_invalid_pool[-1]",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_invalid_pool[1000001]",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_body_limits[too-short]",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_body_limits[padded-overlimit]",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_no_eligible_submissions",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_tie_break",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_terminal_approval",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_invalid_json_leaves_entry_unreviewed",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_withdrawal_audit_and_repeat",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_invalid_validator_output_disagrees",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_forged_leader_output_rejected",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_leader_error_rejected",
+      "exit_code": 0
+    },
+    {
+      "test": "tests/test_fairdrop.py::test_nondeterministic_closure_serialization",
+      "exit_code": 0
+    }
+  ]
+}

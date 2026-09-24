@@ -19,7 +19,7 @@ def run(item):
  return {'test':node,'exit_code':r.returncode,'xml':str(xml),'output':r.stdout if r.returncode else ''}
 results=[]
 # Separate local processes, with the official SDK unchanged in each process.
-with ThreadPoolExecutor(max_workers=3) as pool:
+with ThreadPoolExecutor(max_workers=1) as pool:
  for future in as_completed([pool.submit(run,item) for item in enumerate(nodes)]):
   r=future.result();results.append(r)
   print(('PASS ' if r['exit_code']==0 else 'FAIL ')+r['test'],flush=True)

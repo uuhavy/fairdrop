@@ -182,7 +182,7 @@ def test_forged_leader_output_rejected(campaign,direct_vm,direct_alice):
 
 def test_leader_error_rejected(campaign,direct_vm,direct_alice):
     key=submit(campaign,direct_vm,direct_alice);campaign.close_submissions();grade(campaign,direct_vm,key)
-    from genlayer import gl
+    import genlayer as gl
     assert direct_vm.run_validator(leader_error=gl.vm.UserError('Simulated leader failure')) is False
 
 def test_nondeterministic_closure_serialization(campaign,direct_vm,direct_alice):
